@@ -1,5 +1,6 @@
 export const ADD_COST = 'ADD_COST_SCENE';
 export const ADD_CATEGORY = 'ADD_CATEGORY_SCENE';
+export const LAST_COSTS = 'LAST_COSTS_SCENE';
 export const CONFIRM = 'CONFIRM_SCENE';
 
 export const CHANGE_COST = 'CHANGE_COST_SCENE';

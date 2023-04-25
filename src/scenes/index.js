@@ -1,7 +1,7 @@
 import { cancelScene } from "./cancel.js";
 import { confirmCostScene } from './confirmCost.js'
 import { addCategoryScene } from "./addCategory.js";
-import { addCostsScene } from "./addCosts.js";
+import { addCostScene } from "./addCost.js";
 import {
     changeAmountScene,
     changeCategoryScene,
@@ -9,15 +9,17 @@ import {
     changeMonthScene,
     changeSubjectScene
 } from "./changeCost.js";
+import { lastCostsScene } from "./lastCosts.js";
 
 export const telbitScenes = [
     addCategoryScene,
-    addCostsScene,
+    addCostScene,
     changeCostScene,
     changeAmountScene,
     changeSubjectScene,
     changeCategoryScene,
     changeMonthScene,
+    lastCostsScene,
     confirmCostScene,
     cancelScene
 ];

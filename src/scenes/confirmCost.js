@@ -1,5 +1,5 @@
 import { Scenes, Markup } from "telegraf";
-import { Cost } from "./addCosts.js";
+import { Cost } from "./addCost.js";
 
 import { CONFIRM, CHANGE_COST } from "./common/scenes.js";
 import * as actions from './common/actions.js'
@@ -20,7 +20,12 @@ confirmCostScene.enter((ctx) => {
 
 confirmCostScene.action(actions.YES, async (ctx) => {
     const costController = new CostController();
-    await costController.create(Cost);
+    console.log(Cost);
+    if (Cost.id == 0) {
+        await costController.create(Cost);
+    } else {
+        await costController.update(Cost);
+    }
     ctx.editMessageText('Расход записан! 👌');
     return ctx.scene.leave();
 })

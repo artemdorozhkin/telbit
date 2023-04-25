@@ -7,20 +7,22 @@ import * as scenes from "./common/scenes.js";
 
 
 export const Cost = {
+    id: 0,
     category: '',
     subject: '',
     amount: 0,
     month: '',
 };
 
-export const addCostsScene = new Scenes.BaseScene(scenes.ADD_COST);
+export const addCostScene = new Scenes.BaseScene(scenes.ADD_COST);
 
-addCostsScene.enter((ctx) => {
-    Cost.amount = ctx.message.text.replace(',', '.').trim();
+addCostScene.enter((ctx) => {
+    Cost.id = 0;
+    Cost.amount = +ctx.message.text.replace(',', '.').trim();
     ctx.reply('Что оплатили?', Markup.inlineKeyboard(buttons.cancel()));
 });
 
-addCostsScene.on('text', async (ctx) => {
+addCostScene.on('text', async (ctx) => {
     Cost.subject = ctx.message.text;
 
     const categories = [];
@@ -31,7 +33,7 @@ addCostsScene.on('text', async (ctx) => {
     ctx.reply('Выберите категорию расхода', Markup.inlineKeyboard(categories));
 });
 
-addCostsScene.action(new RegExp("^" + actions.CATEGORY), (ctx) => {
+addCostScene.action(new RegExp("^" + actions.CATEGORY), (ctx) => {
     Cost.category = ctx.callbackQuery.data.replace(actions.CATEGORY, '');
 
     const months = buttons.months();
@@ -39,19 +41,19 @@ addCostsScene.action(new RegExp("^" + actions.CATEGORY), (ctx) => {
     ctx.editMessageText('Выберите месяц расхода', Markup.inlineKeyboard(months))
 });
 
-addCostsScene.action(MONTHS_PATTERN, (ctx) => {
+addCostScene.action(MONTHS_PATTERN, (ctx) => {
     Cost.month = ctx.callbackQuery.data;
     return ctx.scene.enter(scenes.CONFIRM)
 });
 
-addCostsScene.action(actions.ADD_CATEGORY, (ctx) => {
+addCostScene.action(actions.ADD_CATEGORY, (ctx) => {
     return ctx.scene.enter(scenes.ADD_CATEGORY);
 });
 
-addCostsScene.action(actions.CANCEL, (ctx) => {
+addCostScene.action(actions.CANCEL, (ctx) => {
     return ctx.scene.enter(scenes.CANCEL);
 });
 
-addCostsScene.use((ctx) => {
+addCostScene.use((ctx) => {
     ctx.reply('Выберите действие, или нажмите кнопку Отмена', Markup.inlineKeyboard(buttons.cancel()));
 });

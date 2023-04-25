@@ -2,7 +2,7 @@ import { Markup, Scenes } from "telegraf";
 import isNumber from "is-number";
 import * as buttons from "./common/buttons.js";
 
-import { Cost } from "./addCosts.js";
+import { Cost } from "./addCost.js";
 
 import * as scenes from "./common/scenes.js";
 import * as actions from "./common/actions.js";
@@ -90,7 +90,7 @@ export const changeCategoryScene = new Scenes.BaseScene(scenes.CHANGE_CATEGORY);
 
 changeCategoryScene.enter(async (ctx) => {
     const categories = [];
-    categories.push(await buttons.categories());
+    categories.push(...await buttons.categories());
     categories.push(buttons.newCategory());
     categories.push(buttons.cancel());
 

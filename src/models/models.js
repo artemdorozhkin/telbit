@@ -9,7 +9,7 @@ export const Category = sequelize.define('category', {
 export const Cost = sequelize.define('cost', {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     subject: { type: DataTypes.STRING, allowNull: false },
-    amount: { type: DataTypes.DECIMAL, defaultValue: 0 },
+    amount: { type: DataTypes.DECIMAL(10, 2), defaultValue: 0 },
     month: { type: DataTypes.STRING, allowNull: false },
 });
 
