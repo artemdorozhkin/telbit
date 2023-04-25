@@ -2,6 +2,7 @@ import { Op, Sequelize } from "sequelize";
 import { Category, Cost } from "../models/models.js"
 import { CategoryController } from "./categoryController.js";
 import moment from "moment/moment.js";
+import { MONTH_NAMES } from "../scenes/common/constants.js";
 
 const categoryController = new CategoryController();
 
@@ -49,8 +50,7 @@ export class CostController {
     }
 
     async getMonthSum() {
-        const months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
-        const curMonth = months[moment().month()];
+        const curMonth = MONTH_NAMES[moment().month()];
 
         const sum = await Cost.findAll(
             {

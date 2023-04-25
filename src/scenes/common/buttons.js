@@ -1,4 +1,4 @@
-import { MONTH_NAMES, firstMonths, secondMonths, thirdMonths } from './constants.js'
+import { MONTH_NAMES } from './constants.js'
 import * as actions from './actions.js';
 import { Markup } from 'telegraf';
 import { CategoryController } from '../../controllers/categoryController.js';
