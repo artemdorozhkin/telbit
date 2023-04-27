@@ -133,6 +133,5 @@ bot.launch();
 
 function access(ctx) {
     const users = process.env.USERS.split(',');
-    console.log(`${ctx.chat.id} стучится`);
     return users.includes(ctx.chat.id.toString());
 }
