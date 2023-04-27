@@ -1,10 +1,9 @@
-import { Markup, Scenes } from "telegraf";
-import * as buttons from "./common/buttons.js";
+import { Markup, Scenes } from 'telegraf';
+import * as buttons from './common/buttons.js';
 
-import { MONTHS_PATTERN } from "./common/constants.js";
-import * as actions from "./common/actions.js";
-import * as scenes from "./common/scenes.js";
-
+import { MONTHS_PATTERN } from './common/constants.js';
+import * as actions from './common/actions.js';
+import * as scenes from './common/scenes.js';
 
 export const Cost = {
     id: 0,
@@ -33,26 +32,22 @@ addCostScene.on('text', async (ctx) => {
     ctx.reply('Выберите категорию расхода', Markup.inlineKeyboard(categories));
 });
 
-addCostScene.action(new RegExp("^" + actions.CATEGORY), (ctx) => {
+addCostScene.action(new RegExp(`^${actions.CATEGORY}`), (ctx) => {
     Cost.category = ctx.callbackQuery.data.replace(actions.CATEGORY, '');
 
     const months = buttons.months();
     months.push(buttons.cancel());
-    ctx.editMessageText('Выберите месяц расхода', Markup.inlineKeyboard(months))
+    ctx.editMessageText('Выберите месяц расхода', Markup.inlineKeyboard(months));
 });
 
 addCostScene.action(MONTHS_PATTERN, (ctx) => {
     Cost.month = ctx.callbackQuery.data;
-    return ctx.scene.enter(scenes.CONFIRM)
+    return ctx.scene.enter(scenes.CONFIRM);
 });
 
-addCostScene.action(actions.ADD_CATEGORY, (ctx) => {
-    return ctx.scene.enter(scenes.ADD_CATEGORY);
-});
+addCostScene.action(actions.ADD_CATEGORY, (ctx) => ctx.scene.enter(scenes.ADD_CATEGORY));
 
-addCostScene.action(actions.CANCEL, (ctx) => {
-    return ctx.scene.enter(scenes.CANCEL);
-});
+addCostScene.action(actions.CANCEL, (ctx) => ctx.scene.enter(scenes.CANCEL));
 
 addCostScene.use((ctx) => {
     ctx.reply('Выберите действие, или нажмите кнопку Отмена', Markup.inlineKeyboard(buttons.cancel()));

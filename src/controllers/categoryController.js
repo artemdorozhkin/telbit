@@ -1,22 +1,22 @@
-import { Category } from "../models/models.js"
+import { Category } from '../models/models.js';
 
-export class CategoryController {
-    async create(name) {
-        const category = await Category.create({ name });
+export default class CategoryController {
+    static async create(name) {
+        await Category.create({ name });
     }
 
-    async getId(name) {
+    static async getId(name) {
         const category = await Category.findOne(
             {
-                where: { name }
-            }
+                where: { name },
+            },
         );
 
-        console.log(category);
         return category.dataValues.id;
     }
 
-    async getAll() {
-        return await Category.findAll();
+    static async getAll() {
+        const categories = await Category.findAll();
+        return categories;
     }
 }

@@ -1,38 +1,41 @@
-import { MONTH_NAMES } from './constants.js'
-import * as actions from './actions.js';
 import { Markup } from 'telegraf';
-import { CategoryController } from '../../controllers/categoryController.js';
+import { MONTH_NAMES } from './constants.js';
+import * as actions from './actions.js';
+import CategoryController from '../../controllers/categoryController.js';
 
 export function months() {
-    let buttons = [];
-    let buffer = [];
-    for (let monthName of MONTH_NAMES) {
-        buffer.push(Markup.button.callback(monthName, monthName));
-        if (buffer.length == 4) {
-            buttons.push(buffer.slice());
-            buffer = [];
-        }
+    const buttons = [];
+    const columns = 4;
+
+    let start = 0;
+    while (start < MONTH_NAMES.length) {
+        const end = start + columns;
+        buttons.push(
+            MONTH_NAMES.slice(start, end).map(
+                (monthName) => Markup.button.callback(monthName, monthName),
+            ),
+        );
+        start = end;
     }
-    if (buffer.length > 0) buttons.push(buffer.slice());
 
     return buttons;
 }
 
 export async function categories() {
-    const categoryController = new CategoryController();
-    const categories = await categoryController.getAll();
+    const categoryNames = await CategoryController.getAll();
 
-    let buttons = [];
-    let buffer = [];
-    for (let category of categories) {
-        const name = category.name;
-        buffer.push(Markup.button.callback(name, actions.CATEGORY + name));
-        if (buffer.length == 3) {
-            buttons.push(buffer.slice());
-            buffer = [];
-        }
+    const buttons = [];
+    const columns = 3;
+    let start = 0;
+    while (start < categoryNames.length) {
+        const end = start + columns;
+        buttons.push(
+            categoryNames.slice(start, end).map(
+                ({ name }) => Markup.button.callback(name, actions.CATEGORY + name),
+            ),
+        );
+        start = end;
     }
-    if (buffer.length > 0) buttons.push(buffer.slice());
 
     return buttons;
 }
