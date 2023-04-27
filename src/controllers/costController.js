@@ -46,7 +46,7 @@ export class CostController {
                 raw: true,
             });
 
-        return sum.at(0).total;
+        return sum.at(0).total || 0;
     }
 
     async getMonthSum() {
@@ -61,7 +61,7 @@ export class CostController {
                 raw: true,
             });
 
-        return sum.at(0).total;
+        return sum.at(0).total || 0;
     }
 
     async getById(id) {
