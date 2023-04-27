@@ -1,13 +1,14 @@
 import { Sequelize } from 'sequelize';
+import * as env from './config/keys.js';
 
 export const sequelize = new Sequelize(
-    process.env.DB_NAME,
-    process.env.DB_LOGIN,
-    process.env.DB_PASSWORD,
+    env.DB_NAME,
+    env.DB_LOGIN,
+    env.DB_PASSWORD,
     {
         dialect: 'mysql',
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
+        host: env.DB_HOST,
+        port: env.DB_PORT,
     },
 );
 
@@ -16,7 +17,7 @@ export function start() {
         sequelize.authenticate();
         sequelize.sync();
         /* eslint-disable-next-line */
-        console.log(`database runing on port ${process.env.DB_PORT}`);
+        console.log(`database runing on port ${env.DB_PORT}`);
     } catch (e) {
         /* eslint-disable-next-line */
         console.log(`can't start database: ${e}`);

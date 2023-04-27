@@ -1,28 +1,37 @@
-import './loadEnv.js';
+import './config/loadEnv.js';
+import * as env from './config/keys.js';
+
 import {
-    Telegraf, Scenes, session, Markup,
+    Telegraf,
+    Scenes,
+    session,
+    Markup,
 } from 'telegraf';
+
 import telbitScenes from './scenes/index.js';
 import * as scenes from './scenes/common/scenes.js';
 import * as actions from './scenes/common/actions.js';
+
 import * as db from './db.js';
 import CategoryController from './controllers/categoryController.js';
 import CostController from './controllers/costController.js';
+
 import { Cost } from './scenes/addCost.js';
 import * as buttons from './scenes/common/buttons.js';
 import costModelToObject from './scenes/common/utils.js';
+
 
 let idToDel = 0;
 const accessDenied = 'Это частный бот, доступ извне запрещен.';
 
 function access(ctx) {
-    const users = process.env.USERS.split(',');
+    const users = env.USERS.split(',');
     return users.includes(ctx.chat.id.toString());
 }
 
 db.start();
 
-const bot = new Telegraf(process.env.TOKEN);
+const bot = new Telegraf(env.TOKEN);
 const stage = new Scenes.Stage(telbitScenes);
 bot.use(session());
 bot.use(stage.middleware());
