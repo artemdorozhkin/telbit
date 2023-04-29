@@ -1,6 +1,5 @@
-import './config/loadEnv.js';
+import config from './config/env.js';
 import { Telegraf, Scenes, session, Markup } from 'telegraf';
-import * as env from './config/keys.js';
 
 import telbitScenes from './scenes/index.js';
 import * as scenes from './scenes/common/scenes.js';
@@ -18,13 +17,13 @@ let idToDel = 0;
 const accessDenied = 'Это частный бот, доступ извне запрещен.';
 
 function access(ctx) {
-  const users = env.USERS.split(',');
+  const users = config.access.users.split(',');
   return users.includes(ctx.chat.id.toString());
 }
 
 db.start();
 
-const bot = new Telegraf(env.TOKEN);
+const bot = new Telegraf(config.bot.token);
 const stage = new Scenes.Stage(telbitScenes);
 bot.use(session());
 bot.use(stage.middleware());
