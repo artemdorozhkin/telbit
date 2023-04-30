@@ -1,5 +1,5 @@
 import { Scenes } from 'telegraf';
-import { CANCEL } from './common/scenes.js';
+import { CANCEL } from '../common/scenes.js';
 
 const cancelScene = new Scenes.BaseScene(CANCEL);
 

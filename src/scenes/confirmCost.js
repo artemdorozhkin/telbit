@@ -1,9 +1,9 @@
 import { Scenes, Markup } from 'telegraf';
-import { Cost } from './addCost.js';
+import { Cost } from './cost.scene.js';
 
-import { CONFIRM, CHANGE_COST } from './common/scenes.js';
-import * as actions from './common/actions.js';
-import * as buttons from './common/buttons.js';
+import { CONFIRM, CHANGE_COST } from '../common/scenes.js';
+import * as actions from '../common/actions.js';
+import * as buttons from '../common/buttons.js';
 import CostController from '../controllers/costController.js';
 
 const confirmCostScene = new Scenes.BaseScene(CONFIRM);

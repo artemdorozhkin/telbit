@@ -1,4 +1,4 @@
-import { Cost } from '../addCost.js';
+import { Cost } from '../scenes/cost.scene.js';
 
 export default function costModelToObject(cost) {
   Cost.id = cost.id;

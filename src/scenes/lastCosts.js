@@ -1,7 +1,7 @@
 import { Markup, Scenes } from 'telegraf';
 import CostController from '../controllers/costController.js';
-import * as scenes from './common/scenes.js';
-import * as buttons from './common/buttons.js';
+import * as scenes from '../common/scenes.js';
+import * as buttons from '../common/buttons.js';
 
 function printCostCard(ctx, cost) {
   ctx.reply(

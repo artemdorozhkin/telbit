@@ -1,7 +1,7 @@
 import { Markup, Scenes } from 'telegraf';
-import * as scenes from './common/scenes.js';
-import * as actions from './common/actions.js';
-import { cancel } from './common/buttons.js';
+import * as scenes from '../common/scenes.js';
+import * as actions from '../common/actions.js';
+import { cancel } from '../common/buttons.js';
 import CategoryController from '../controllers/categoryController.js';
 
 const addCategoryScene = new Scenes.BaseScene(scenes.ADD_CATEGORY);

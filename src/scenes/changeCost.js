@@ -1,12 +1,12 @@
 import { Markup, Scenes } from 'telegraf';
 import isNumber from 'is-number';
-import * as buttons from './common/buttons.js';
+import * as buttons from '../common/buttons.js';
 
-import { Cost } from './addCost.js';
+import { Cost } from './cost.scene.js';
 
-import * as scenes from './common/scenes.js';
-import * as actions from './common/actions.js';
-import { MONTHS_PATTERN } from './common/constants.js';
+import * as scenes from '../common/scenes.js';
+import * as actions from '../common/actions.js';
+import { MONTHS_PATTERN } from '../common/constants.js';
 
 export const changeCostScene = new Scenes.BaseScene(scenes.CHANGE_COST);
 

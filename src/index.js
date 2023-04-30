@@ -1,130 +1,79 @@
-import config from './config/env.js';
-import { Telegraf, Scenes, session, Markup } from 'telegraf';
+import Telbit from './Telbit.js';
+import ConfigService from './config/ConfigService.js';
+import CommandsService from './commands/CommandsService.js';
 
-import telbitScenes from './scenes/index.js';
-import * as scenes from './scenes/common/scenes.js';
-import * as actions from './scenes/common/actions.js';
+const telbit = new Telbit(new ConfigService(), new CommandsService());
+telbit.start();
 
-import * as db from './db.js';
-import CategoryController from './controllers/categoryController.js';
-import CostController from './controllers/costController.js';
+// import { Telegraf, Scenes, session, Markup } from 'telegraf';
 
-import { Cost } from './scenes/addCost.js';
-import * as buttons from './scenes/common/buttons.js';
-import costModelToObject from './scenes/common/utils.js';
+// import * as scenes from './common/scenes.js';
+// import * as actions from './common/actions.js';
 
-let idToDel = 0;
-const accessDenied = 'Это частный бот, доступ извне запрещен.';
+// import CostController from './controllers/costController.js';
 
-function access(ctx) {
-  const users = config.access.users.split(',');
-  return users.includes(ctx.chat.id.toString());
-}
+// import { Cost } from './scenes/cost.scene.js';
+// import * as buttons from './common/buttons.js';
+// import costModelToObject from './common/utils.js';
+// import CommandsService from './commands/CommandsService.js';
 
-db.start();
+// let idToDel = 0;
+// const accessDenied = 'Это частный бот, доступ извне запрещен.';
 
-const bot = new Telegraf(config.bot.token);
-const stage = new Scenes.Stage(telbitScenes);
-bot.use(session());
-bot.use(stage.middleware());
+// bot.action(new RegExp(actions.EDIT), async (ctx) => {
+//   if (!access(ctx)) return;
 
-bot.hears(/^\b[0-9\,\.]+\b$/i, (ctx) => {
-  if (!access(ctx)) return ctx.reply(accessDenied);
+//   const match = new RegExp(`${actions.EDIT}(\\d+)`).exec(
+//     ctx.callbackQuery.data
+//   );
+//   if (!match) {
+//     ctx.reply('Что-то пошло не так👀');
+//     return;
+//   }
 
-  ctx.scene.enter(scenes.ADD_COST);
-});
+//   const cost = await CostController.getById(match[1]);
 
-bot.command('sumday', async (ctx) => {
-  if (!access(ctx)) return;
+//   if (!cost) {
+//     ctx.reply('Расход не существует или удален...');
+//     return;
+//   }
 
-  const sum = await CostController.getTodaySum();
-  ctx.reply(`Сумма за сегодня: ${sum}`);
-});
+//   costModelToObject(cost, Cost);
+//   return ctx.scene.enter(scenes.CHANGE_COST);
+// });
 
-bot.command('summonth', async (ctx) => {
-  if (!access(ctx)) return;
+// bot.action(new RegExp(actions.DEL), async (ctx) => {
+//   if (!access(ctx)) return;
 
-  const sum = await CostController.getMonthSum();
-  ctx.reply(`Сумма за месяц: ${sum}`);
-});
+//   const match = new RegExp(`${actions.DEL}(\\d+)`).exec(ctx.callbackQuery.data);
+//   if (!match) {
+//     ctx.reply('Что-то пошло не так👀');
+//     return;
+//   }
 
-bot.hears(/последни[ей]\s*\d*/i, async (ctx) => {
-  if (!access(ctx)) return;
+//   [, idToDel] = match;
+//   const cost = await CostController.getById(idToDel);
 
-  ctx.scene.enter(scenes.LAST_COSTS);
-});
+//   if (!cost) {
+//     ctx.reply('Расход не существует или удален...');
+//     return;
+//   }
 
-bot.hears(/категория/i, (ctx) => {
-  if (!access(ctx)) return;
+//   costModelToObject(cost);
+//   ctx.replyWithHTML(
+//     `Вы уверены, что хотите удалить этот расход?\n<i>(${Cost.category}) ${Cost.subject}</i>`,
+//     Markup.inlineKeyboard([buttons.yes(), buttons.no()])
+//   );
+// });
 
-  ctx.scene.enter(scenes.ADD_CATEGORY);
-});
+// bot.action(actions.YES, async (ctx) => {
+//   if (!access(ctx)) return;
 
-bot.hears(/категории/i, async (ctx) => {
-  if (!access(ctx)) return;
+//   await CostController.delById(idToDel);
+//   ctx.replyWithHTML('Расход успешно удален!❌');
+// });
 
-  const categories = await CategoryController.getAll();
-  const count = categories.length;
-  ctx.reply(`Сейчас количество категорий: ${count}`);
-  ctx.reply(categories.map((c) => c.name).join('\n'));
-});
-
-bot.action(new RegExp(actions.EDIT), async (ctx) => {
-  if (!access(ctx)) return;
-
-  const match = new RegExp(`${actions.EDIT}(\\d+)`).exec(
-    ctx.callbackQuery.data
-  );
-  if (!match) {
-    ctx.reply('Что-то пошло не так👀');
-    return;
-  }
-
-  const cost = await CostController.getById(match[1]);
-
-  if (!cost) {
-    ctx.reply('Расход не существует или удален...');
-    return;
-  }
-
-  costModelToObject(cost, Cost);
-  return ctx.scene.enter(scenes.CHANGE_COST);
-});
-
-bot.action(new RegExp(actions.DEL), async (ctx) => {
-  if (!access(ctx)) return;
-
-  const match = new RegExp(`${actions.DEL}(\\d+)`).exec(ctx.callbackQuery.data);
-  if (!match) {
-    ctx.reply('Что-то пошло не так👀');
-    return;
-  }
-
-  [, idToDel] = match;
-  const cost = await CostController.getById(idToDel);
-
-  if (!cost) {
-    ctx.reply('Расход не существует или удален...');
-    return;
-  }
-
-  costModelToObject(cost);
-  ctx.replyWithHTML(
-    `Вы уверены, что хотите удалить этот расход?\n<i>(${Cost.category}) ${Cost.subject}</i>`,
-    Markup.inlineKeyboard([buttons.yes(), buttons.no()])
-  );
-});
-
-bot.action(actions.YES, async (ctx) => {
-  if (!access(ctx)) return;
-
-  await CostController.delById(idToDel);
-  ctx.replyWithHTML('Расход успешно удален!❌');
-});
-
-bot.action(actions.NO, (ctx) => {
-  if (!access(ctx)) return;
-  return ctx.scene.enter(scenes.CANCEL);
-});
-
-bot.launch();
+// bot.action(actions.NO, (ctx) => {
+//   if (!access(ctx)) return;
+//   return ctx.scene.enter(scenes.CANCEL);
+// });

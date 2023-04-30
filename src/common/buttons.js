@@ -1,7 +1,7 @@
 import { Markup } from 'telegraf';
 import { MONTH_NAMES } from './constants.js';
 import * as actions from './actions.js';
-import CategoryController from '../../controllers/categoryController.js';
+import CategoryController from '../controllers/categoryController.js';
 
 export function months() {
   const buttons = [];

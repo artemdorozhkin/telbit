@@ -1,7 +1,7 @@
 import { Op, Sequelize } from 'sequelize';
 import moment from 'moment/moment.js';
 import { Category, Cost } from '../models/models.js';
-import { MONTH_NAMES } from '../scenes/common/constants.js';
+import { MONTH_NAMES } from '../common/constants.js';
 import CategoryController from './categoryController.js';
 
 export default class CostController {
