@@ -1,7 +1,12 @@
 import { Markup } from 'telegraf';
 import { MONTH_NAMES } from './constants.js';
 import * as actions from './actions.js';
-import CategoryController from '../controllers/categoryController.js';
+import * as buttons from './buttons.js';
+import CategoryController from '../controllers/CategoryController.js';
+
+export function lastCosts(costId) {
+  return Markup.inlineKeyboard([buttons.edit(costId), buttons.del(costId)]);
+}
 
 export function months() {
   const buttons = [];
@@ -66,4 +71,13 @@ export function edit(id) {
 
 export function del(id) {
   return Markup.button.callback('Удалить', actions.DEL + id);
+}
+
+export function editCost() {
+  return [
+    Markup.button.callback('Сумма', actions.CHANGE_AMOUNT),
+    Markup.button.callback('Товар/услугу', actions.CHANGE_SUBJECT),
+    Markup.button.callback('Категорию', actions.CHANGE_CATEGORY),
+    Markup.button.callback('Месяц', actions.CHANGE_MONTH),
+  ];
 }

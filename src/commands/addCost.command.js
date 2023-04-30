@@ -1,6 +1,6 @@
-import * as scenes from '../common/scenes.js';
+import AddCostScene from '../scenes/addCost.scene.js';
 
-export default class Cost {
+export default class AddCostCommand {
   bot;
 
   constructor(bot) {
@@ -9,7 +9,7 @@ export default class Cost {
 
   handle() {
     this.bot.hears(/^\b[0-9\,\.]+\b$/i, (ctx) => {
-      ctx.scene.enter(scenes.ADD_COST);
+      new AddCostScene().start(ctx);
     });
   }
 }

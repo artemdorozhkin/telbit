@@ -1,6 +1,6 @@
-import CostController from '../controllers/costController.js';
+import CostController from '../controllers/CostController.js';
 
-export default class SumCosts {
+export default class SumCostsCommand {
   bot;
 
   constructor(bot) {

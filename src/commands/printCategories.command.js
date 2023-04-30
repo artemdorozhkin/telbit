@@ -1,4 +1,4 @@
-export default class Categories {
+export default class PrintCategoriesCommand {
   bot;
 
   constructor(bot) {

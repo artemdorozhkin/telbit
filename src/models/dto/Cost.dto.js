@@ -1,7 +1,15 @@
 export default class CostDTO {
-  static id = 0;
-  static category = '';
-  static subject = '';
-  static amount = 0;
-  static month = '';
+  static id;
+  static category;
+  static subject;
+  static amount;
+  static month;
+
+  constructor() {
+    this.id = 0;
+    this.category = '';
+    this.subject = '';
+    this.amount = 0;
+    this.month = '';
+  }
 }

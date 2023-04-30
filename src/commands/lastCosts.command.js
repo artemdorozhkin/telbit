@@ -1,6 +1,6 @@
-import * as scenes from '../common/scenes.js';
+import LastCostsScene from '../scenes/lastCosts.scene.js';
 
-export default class LastCosts {
+export default class LastCostsCommand {
   bot;
 
   constructor(bot) {
@@ -9,7 +9,7 @@ export default class LastCosts {
 
   handle() {
     this.bot.hears(/последни[ей]\s*\d*/i, async (ctx) => {
-      ctx.scene.enter(scenes.LAST_COSTS);
+      new LastCostsScene().start(ctx);
     });
   }
 }

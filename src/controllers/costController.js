@@ -2,7 +2,7 @@ import { Op, Sequelize } from 'sequelize';
 import moment from 'moment/moment.js';
 import { Category, Cost } from '../models/models.js';
 import { MONTH_NAMES } from '../common/constants.js';
-import CategoryController from './categoryController.js';
+import CategoryController from './CategoryController.js';
 
 export default class CostController {
   static async create(cost) {
@@ -45,7 +45,7 @@ export default class CostController {
       attributes: [[Sequelize.fn('sum', Sequelize.col('amount')), 'total']],
       where: {
         createdAt: {
-          [Op.gte]: moment().startOf('day'),
+          [Op.gte]: moment().startOf('day').subtract(3, 'hours'), // отнимаем 3 часа, т.к. в БД -3
         },
       },
       raw: true,

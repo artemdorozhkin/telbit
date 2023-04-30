@@ -1,9 +1,11 @@
-import { Cost } from '../scenes/cost.scene.js';
+import CostDTO from './../models/dto/Cost.dto.js';
 
 export default function costModelToObject(cost) {
-  Cost.id = cost.id;
-  Cost.category = cost.category.name;
-  Cost.subject = cost.subject;
-  Cost.month = cost.month;
-  Cost.amount = cost.amount;
+  CostDTO.id = cost.id;
+  CostDTO.category = cost.category.name;
+  CostDTO.subject = cost.subject;
+  CostDTO.month = cost.month;
+  CostDTO.amount = cost.amount;
+
+  return CostDTO;
 }
