@@ -1,3 +1,5 @@
+import CategoryController from '../controllers/CategoryController.js';
+
 export default class PrintCategoriesCommand {
   bot;
 

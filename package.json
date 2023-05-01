@@ -12,6 +12,7 @@
   "author": "artodoro",
   "license": "ISC",
   "dependencies": {
+    "chartjs-node-canvas": "^4.1.6",
     "dotenv": "^16.0.3",
     "is-number": "^7.0.0",
     "moment": "^2.29.4",

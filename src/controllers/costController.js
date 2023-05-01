@@ -42,16 +42,37 @@ export default class CostController {
 
   static async getTodaySum() {
     const sum = await Cost.findAll({
-      attributes: [[Sequelize.fn('sum', Sequelize.col('amount')), 'total']],
+      attributes: [
+        'subject',
+        [Sequelize.fn('sum', Sequelize.col('amount')), 'total'],
+      ],
       where: {
         createdAt: {
           [Op.gte]: moment().startOf('day').subtract(3, 'hours'), // отнимаем 3 часа, т.к. в БД -3
         },
       },
+      group: ['subject'],
       raw: true,
     });
 
-    return sum.at(0).total || 0;
+    return sum || 0;
+  }
+
+  static async getSumByCategoty(month) {
+    const sum = await Cost.findAll({
+      attributes: [
+        'categoryId',
+        [Sequelize.fn('sum', Sequelize.col('amount')), 'total'],
+      ],
+      where: {
+        month,
+      },
+      group: ['categoryId'],
+      include: Category,
+      raw: true,
+    });
+
+    return sum || 0;
   }
 
   static async getMonthSum() {
