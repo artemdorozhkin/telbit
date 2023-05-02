@@ -17,9 +17,12 @@ export default class SumCostsCommand {
 
       const costs = [];
       costs.push('<b>Расходы за сегодня</b>\n');
+      let total = 0;
       sum.forEach((s) => {
+        total += +s.total;
         costs.push(`${s.subject}: ${s.total}`);
       });
+      costs.push(`\nИтого: ${total}`);
 
       ctx.replyWithHTML(costs.join('\n'));
     });
