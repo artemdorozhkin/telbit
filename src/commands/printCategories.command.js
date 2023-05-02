@@ -1,3 +1,4 @@
+import { hasAccess } from '../common/utils.js';
 import { accessDeniedMsg } from '../common/constants.js';
 import CategoryController from '../controllers/CategoryController.js';
 
