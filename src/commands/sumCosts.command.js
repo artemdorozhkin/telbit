@@ -29,11 +29,14 @@ export default class SumCostsCommand {
     });
 
     this.bot.action(MONTHS_PATTERN, async (ctx) => {
+      if (ctx.message) {
+        ctx.deleteMessage();
+      }
       const month = ctx.callbackQuery.data;
       const sum = await CostController.getSumByCategoty(month);
+
       const labels = [];
       const data = [];
-
       sum.forEach((s) => {
         labels.push(s['category.name']);
         data.push(s['total']);
@@ -41,10 +44,9 @@ export default class SumCostsCommand {
 
       const chart = new Chart(labels, data, month);
       const imgPath = await chart.getImage('monthReport');
-      if (ctx.message) {
-        ctx.deleteMessage();
-      }
-      ctx.replyWithPhoto({ source: imgPath });
+
+      await ctx.replyWithPhoto({ source: imgPath });
+      fs.rmSync(imgPath);
     });
   }
 }

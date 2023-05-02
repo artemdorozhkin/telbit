@@ -1,4 +1,5 @@
 import fs from 'fs';
+import crypto from 'crypto';
 import { ChartJSNodeCanvas } from 'chartjs-node-canvas';
 
 export default class Chart {
@@ -44,7 +45,8 @@ export default class Chart {
     const base64Image = dataUrl;
 
     const base64Data = base64Image.replace(/^data:image\/png;base64,/, '');
-    const filePath = `./reports/${name}.png`;
+    const temp = crypto.randomBytes(4).readUInt32LE(0);
+    const filePath = `./reports/${name}${temp}.png`;
     fs.writeFile(filePath, base64Data, 'base64', (err) => {
       if (err) {
         console.log(err);
