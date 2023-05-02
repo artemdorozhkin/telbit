@@ -24,6 +24,9 @@ export default class SumCostsCommand {
       });
       costs.push(`\nИтого: ${total}`);
 
+      if (costs.length === 1) {
+        return ctx.reply('На сегодня расходов нет 🤗');
+      }
       ctx.replyWithHTML(costs.join('\n'));
     });
 
