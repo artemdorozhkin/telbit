@@ -6,6 +6,7 @@ import * as actions from '../common/actions.js';
 import CostDTO from '../models/dto/Cost.dto.js';
 import { MONTHS_PATTERN } from '../common/constants.js';
 import ConfirmCostScene from './confirmCost.scene.js';
+import CancelScene from './cancel.scene.js';
 
 export default class AddCostScene {
   sceneID;
