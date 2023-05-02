@@ -14,3 +14,5 @@ export const MONTH_NAMES = [
   'Ноябрь',
   'Декабрь',
 ];
+
+export const accessDeniedMsg = 'На данный момент этот бот частный. Доступ извне запрещен.'

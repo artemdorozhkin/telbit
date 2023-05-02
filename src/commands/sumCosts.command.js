@@ -1,7 +1,7 @@
 import Chart from '../Chart.js';
 import CostController from '../controllers/CostController.js';
 import * as keyboards from '../common/inlineKeyboards.js';
-import { MONTHS_PATTERN } from '../common/constants.js';
+import { MONTHS_PATTERN, accessDeniedMsg } from '../common/constants.js';
 import fs from 'fs';
 
 export default class SumCostsCommand {
@@ -13,6 +13,9 @@ export default class SumCostsCommand {
 
   handle() {
     this.bot.command('sumday', async (ctx) => {
+      if (!hasAccess(ctx)) {
+        return ctx.reply(accessDeniedMsg)
+      }
       const sum = await CostController.getTodaySum();
 
       const costs = [];
@@ -31,6 +34,9 @@ export default class SumCostsCommand {
     });
 
     this.bot.command('summonth', async (ctx) => {
+      if (!hasAccess(ctx)) {
+        return ctx.reply(accessDeniedMsg)
+      }
       ctx.reply('Выберите месяц для отчета', keyboards.months());
     });
 

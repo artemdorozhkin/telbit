@@ -23,8 +23,4 @@ export default class Telbit {
     this.bot.launch();
   }
 
-  access(ctx) {
-    const users = ConfigService.split(',');
-    return users.includes(ctx.chat.id.toString());
-  }
 }
