@@ -7,6 +7,7 @@ import CostDTO from '../models/dto/Cost.dto.js';
 import { MONTHS_PATTERN } from '../common/constants.js';
 import ConfirmCostScene from './confirmCost.scene.js';
 import CancelScene from './cancel.scene.js';
+import AddCategoryScene from './addCategory.scene.js';
 
 export default class AddCostScene {
   sceneID;
@@ -45,11 +46,11 @@ export default class AddCostScene {
     });
 
     this.scene.action(actions.ADD_CATEGORY, (ctx) => {
-      return new AddCategoryScene().startScene(ctx);
+      return new AddCategoryScene().start(ctx);
     });
 
     this.scene.action(actions.CANCEL, (ctx) => {
-      return new CancelScene().startScene(ctx);
+      return new CancelScene().start(ctx);
     });
 
     this.scene.use((ctx) => {

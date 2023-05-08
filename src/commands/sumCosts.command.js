@@ -15,7 +15,7 @@ export default class SumCostsCommand {
   handle() {
     this.bot.command('sumday', async (ctx) => {
       if (!hasAccess(ctx)) {
-        return ctx.reply(accessDeniedMsg)
+        return ctx.reply(accessDeniedMsg);
       }
       const sum = await CostController.getTodaySum();
 
@@ -36,7 +36,7 @@ export default class SumCostsCommand {
 
     this.bot.command('summonth', async (ctx) => {
       if (!hasAccess(ctx)) {
-        return ctx.reply(accessDeniedMsg)
+        return ctx.reply(accessDeniedMsg);
       }
       ctx.reply('Выберите месяц для отчета', keyboards.months());
     });
@@ -50,9 +50,11 @@ export default class SumCostsCommand {
 
       const labels = [];
       const data = [];
+      let total = 0;
       sum.forEach((s) => {
         labels.push(s['category.name']);
         data.push(s['total']);
+        total += s['total'];
       });
 
       const chart = new Chart(labels, data, month);
@@ -60,6 +62,7 @@ export default class SumCostsCommand {
 
       await ctx.replyWithPhoto({ source: imgPath });
       fs.rmSync(imgPath);
+      ctx.replyWithHTML(`<b>Общая сумма за ${month}:</b> ${total}`);
     });
   }
 }
