@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import DBService from '../DBService.js';
-import ConfigService from '../config/ConfigService.js';
+import ConfigService from '../common/config/ConfigService.js';
 
 const db = new DBService(new ConfigService(), 'mysql');
 db.start();

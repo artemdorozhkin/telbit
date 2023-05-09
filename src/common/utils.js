@@ -1,5 +1,5 @@
 import CostDTO from './../models/dto/Cost.dto.js';
-import ConfigService from '../config/ConfigService.js';
+import ConfigService from './config/ConfigService.js';
 
 export default function costModelToObject(cost) {
   CostDTO.id = cost.id;
