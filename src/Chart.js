@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 import { ChartJSNodeCanvas } from 'chartjs-node-canvas';
+import log from './common/logging.js';
 
 export default class Chart {
   chartJSNodeCanvas;
@@ -55,7 +56,7 @@ export default class Chart {
 
     fs.writeFile(filePath, base64Data, 'base64', (err) => {
       if (err) {
-        console.log(err);
+        log.error("chart", err);
       }
     });
     return filePath;
