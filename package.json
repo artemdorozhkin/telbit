@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon ./src/index.js",
+    "prod": "node ./src/index.js",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix"
   },
