@@ -48,10 +48,11 @@ export default class Chart {
     const base64Data = base64Image.replace(/^data:image\/png;base64,/, '');
     const temp = crypto.randomBytes(4).readUInt32LE(0);
     const filePath = `./reports/${name}${temp}.png`;
-    console.log(fs.existsSync(path.dirname(filePath)));
+
     if (!fs.existsSync(path.dirname(filePath))) {
       fs.mkdirSync(path.dirname(filePath));
     }
+
     fs.writeFile(filePath, base64Data, 'base64', (err) => {
       if (err) {
         console.log(err);
