@@ -1,4 +1,5 @@
 import { Sequelize } from 'sequelize';
+import log from './common/logging.js';
 
 export default class DBService {
   port;
@@ -6,16 +7,23 @@ export default class DBService {
 
   constructor(config, dialect) {
     this.port = config.get('DB_PORT');
-    this.sequelize = new Sequelize(
-      config.get('DB_NAME'),
-      config.get('DB_LOGIN'),
-      config.get('DB_PASSWORD'),
-      {
-        dialect,
-        host: config.get('DB_HOST'),
-        port: this.port,
-      }
-    );
+    this.sequelize =
+      process.env.NODE_ENV === 'production'
+        ? new Sequelize(config.get('DB_URL'), {
+            logging: (msg) => log.debug('database', msg),
+            dialect,
+          })
+        : new Sequelize(
+            config.get('DB_NAME'),
+            config.get('DB_LOGIN'),
+            config.get('DB_PASSWORD'),
+            {
+              logging: (msg) => log.debug('database', msg),
+              dialect,
+              host: config.get('DB_HOST'),
+              port: this.port,
+            }
+          );
   }
 
   start() {
@@ -23,10 +31,11 @@ export default class DBService {
       this.sequelize.authenticate();
       this.sequelize.sync();
       /* eslint-disable-next-line */
-      console.log(`database runing on port ${this.port}`);
+      log.info(`database runing on port ${this.port}`);
     } catch (e) {
       /* eslint-disable-next-line */
-      console.log(`can't start database: ${e}`);
+      log.error(`can't start database: ${e}`);
+      throw error;
     }
   }
 }
