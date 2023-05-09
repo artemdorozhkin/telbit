@@ -54,14 +54,19 @@ export default class SumCostsCommand {
       sum.forEach((s) => {
         labels.push(s['category.name']);
         data.push(s['total']);
-        total += s['total'];
+        total += +s['total'];
       });
 
-      const chart = new Chart(labels, data, month);
-      const imgPath = await chart.getImage('monthReport');
+      try {
+        const chart = new Chart(labels, data, month);
+        await chart.getImage('monthReport').then(async (imgPath) => {
+          await ctx.replyWithPhoto({ source: imgPath });
+          fs.rmSync(imgPath);
+        });
+      } catch (error) {
+        ctx.reply('Не удалось отправить изображение, повторите попытку позже');
+      }
 
-      await ctx.replyWithPhoto({ source: imgPath });
-      fs.rmSync(imgPath);
       ctx.replyWithHTML(`<b>Общая сумма за ${month}:</b> ${total}`);
     });
   }
