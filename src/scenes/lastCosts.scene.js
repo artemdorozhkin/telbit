@@ -1,6 +1,7 @@
 import { Scenes } from 'telegraf';
 import CostController from '../controllers/CostController.js';
 import * as keyboards from '../common/inlineKeyboards.js';
+import log from '../common/logging.js';
 
 export default class LastCostsScene {
   sceneID;
@@ -18,13 +19,18 @@ export default class LastCostsScene {
     this.scene = new Scenes.BaseScene(this.sceneID);
 
     this.scene.enter(async (ctx) => {
-      const lastNumber = /последни[е|й]\s*(\d*)/i.exec(ctx.message.text);
+      let [, category, lastNumber] = /([а-яё]*)?\s*последни[е|й]\s*(\d*)/i.exec(
+        ctx.message.text
+      );
 
+      if (!category) {
+        category = '';
+      }
       let costs;
-      if (lastNumber && !lastNumber[1]) {
-        costs = await CostController.getTopN(1);
-      } else if (lastNumber && lastNumber[1]) {
-        costs = await CostController.getTopN(lastNumber[1]);
+      if (!lastNumber) {
+        costs = await CostController.getTopN(1, category);
+      } else if (lastNumber) {
+        costs = await CostController.getTopN(lastNumber, category);
       }
 
       if (!costs) return ctx.scene.leave();

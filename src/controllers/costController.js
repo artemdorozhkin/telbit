@@ -3,6 +3,7 @@ import moment from 'moment/moment.js';
 import { Category, Cost } from '../models/models.js';
 import { MONTH_NAMES } from '../common/constants.js';
 import CategoryController from './CategoryController.js';
+import log from '../common/logging.js';
 
 export default class CostController {
   static async create(cost) {
@@ -31,11 +32,18 @@ export default class CostController {
     );
   }
 
-  static async getTopN(number) {
+  static async getTopN(number, category) {
     const costs = await Cost.findAll({
       limit: +number,
       order: [['id', 'DESC']],
-      include: Category,
+      include: {
+        model: Category,
+        where: {
+          name: {
+            [Op.like]: `%${category}%`,
+          },
+        },
+      },
     });
     return costs;
   }
