@@ -24,6 +24,7 @@ export default class Telbit {
     }
 
     this.bot.launch();
+    this.bot.inlineQuery("a", ctx=> ctx.from.first_name)
     log.info("bot is working!")
   }
 

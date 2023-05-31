@@ -4,7 +4,7 @@ import * as keyboards from '../common/inlineKeyboards.js';
 import * as actions from '../common/actions.js';
 
 import CostDTO from '../models/dto/Cost.dto.js';
-import { MONTHS_PATTERN } from '../common/constants.js';
+import { MONTHS_PATTERN, MONTH_NAMES } from '../common/constants.js';
 import ConfirmCostScene from './confirmCost.scene.js';
 import CancelScene from './cancel.scene.js';
 import AddCategoryScene from './addCategory.scene.js';
@@ -26,6 +26,8 @@ export default class AddCostScene {
 
     this.scene.enter((ctx) => {
       CostDTO.id = 0;
+      const currentMonth = new Date().getMonth();
+      CostDTO.month = MONTH_NAMES[currentMonth];
       CostDTO.amount = +ctx.message.text.replace(',', '.').trim();
       ctx.reply('Что оплатили?', keyboards.cancel());
     });
@@ -37,11 +39,6 @@ export default class AddCostScene {
 
     this.scene.action(new RegExp(`^${actions.CATEGORY}`), (ctx) => {
       CostDTO.category = ctx.callbackQuery.data.replace(actions.CATEGORY, '');
-      ctx.editMessageText('Выберите месяц расхода', keyboards.months());
-    });
-
-    this.scene.action(MONTHS_PATTERN, (ctx) => {
-      CostDTO.month = ctx.callbackQuery.data;
       return new ConfirmCostScene().start(ctx);
     });
 

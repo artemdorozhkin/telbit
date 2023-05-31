@@ -4,6 +4,7 @@ import * as keyboards from '../common/inlineKeyboards.js';
 import { hasAccess } from '../common/utils.js';
 import { MONTHS_PATTERN, accessDeniedMsg } from '../common/constants.js';
 import fs from 'fs';
+import log from '../common/logging.js';
 
 export default class SumCostsCommand {
   bot;
@@ -14,6 +15,7 @@ export default class SumCostsCommand {
 
   handle() {
     this.bot.command('sumday', async (ctx) => {
+      log.info(`${ctx.from.first_name} смотрит сумму за день`);
       if (!hasAccess(ctx)) {
         return ctx.reply(accessDeniedMsg);
       }
@@ -35,6 +37,7 @@ export default class SumCostsCommand {
     });
 
     this.bot.command('summonth', async (ctx) => {
+      log.info(`${ctx.from.first_name} смотрит сумму за месяц`);
       if (!hasAccess(ctx)) {
         return ctx.reply(accessDeniedMsg);
       }
