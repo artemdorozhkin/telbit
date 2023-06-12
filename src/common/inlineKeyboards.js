@@ -8,9 +8,12 @@ export function months() {
   return Markup.inlineKeyboard(monthsButtons);
 }
 
-export async function categories() {
+export async function categories(columns, withCosts) {
+  const columnsCount = columns || 3;
   const categoriesButtons = [];
-  categoriesButtons.push(...(await buttons.categories()));
+  categoriesButtons.push(
+    ...(await buttons.categories(columnsCount, withCosts))
+  );
   categoriesButtons.push(buttons.newCategory());
   categoriesButtons.push(buttons.cancel());
 

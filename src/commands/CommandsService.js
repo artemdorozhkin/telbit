@@ -5,6 +5,7 @@ import AddCategoryCommand from './addCategoty.command.js';
 import PrintCategoriesCommand from './printCategories.command.js';
 import EditCostCommand from './editCost.command.js';
 import DeleteCostCommand from './delCost.command.js';
+import DelCategoryCommand from './delCategory.command.js';
 
 export default class CommandsService {
   get(bot) {
@@ -16,6 +17,7 @@ export default class CommandsService {
       new PrintCategoriesCommand(bot),
       new EditCostCommand(bot),
       new DeleteCostCommand(bot),
+      new DelCategoryCommand(bot),
     ];
 
     return commandList;

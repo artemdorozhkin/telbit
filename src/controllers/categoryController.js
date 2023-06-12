@@ -5,6 +5,10 @@ export default class CategoryController {
     await Category.create({ name });
   }
 
+  static async delete(name) {
+    await Category.destroy({ where: { name } });
+  }
+
   static async getId(name) {
     const category = await Category.findOne({
       where: { name },

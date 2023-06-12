@@ -3,6 +3,7 @@ import * as keyboards from '../common/inlineKeyboards.js';
 import * as actions from '../common/actions.js';
 import CategoryController from '../controllers/CategoryController.js';
 import CancelScene from './cancel.scene.js';
+import CostDTO from '../models/dto/Cost.dto.js';
 
 export default class AddCategoryScene {
   sceneID;
@@ -28,6 +29,7 @@ export default class AddCategoryScene {
       await CategoryController.create(category);
       const id = await CategoryController.getId(category);
 
+      CostDTO.category = category;
       ctx.reply(`Добавлена категория: ${id} ${category}`);
       return ctx.scene.leave();
     });

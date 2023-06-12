@@ -105,4 +105,37 @@ export default class CostController {
   static async delById(id) {
     await Cost.destroy({ where: { id } });
   }
+
+  static async getCategoryNameBy(subject) {
+    const splitted = subject.split(' ');
+
+    let elements = '';
+    let foundCategory = '';
+    for (let i = 0; i < splitted.length; i++) {
+      const element = splitted[i];
+      elements = [elements, element].join(' ').trim();
+      const category = await Cost.findOne({
+        where: {
+          subject: {
+            [Op.like]: `%${elements}%`,
+          },
+        },
+        include: Category,
+      });
+      if (!category) {
+        break;
+      }
+
+      foundCategory = category.category.name;
+    }
+
+    console.log(foundCategory);
+    return foundCategory;
+  }
+
+  static async getCountCostsByCategory(name) {
+    const categoryId = await CategoryController.getId(name);
+    const costsCount = await Cost.count({ where: { categoryId } });
+    return costsCount;
+  }
 }

@@ -8,6 +8,7 @@ import EditSubjectScene from './editSubject.scene.js';
 import CancelScene from './cancel.scene.js';
 import LastCostsScene from './lastCosts.scene.js';
 import AddCategoryScene from './addCategory.scene.js';
+import DelCategoryScene from './delCategory.scene.js';
 
 const telbitScenes = [
   new AddCostScene().get(),
@@ -20,6 +21,7 @@ const telbitScenes = [
   new LastCostsScene().get(),
   new ConfirmCostScene().get(),
   new CancelScene().get(),
+  new DelCategoryScene().get(),
 ];
 
 export default telbitScenes;

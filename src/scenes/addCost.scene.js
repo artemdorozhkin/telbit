@@ -8,6 +8,7 @@ import { MONTHS_PATTERN, MONTH_NAMES } from '../common/constants.js';
 import ConfirmCostScene from './confirmCost.scene.js';
 import CancelScene from './cancel.scene.js';
 import AddCategoryScene from './addCategory.scene.js';
+import CostController from '../controllers/CostController.js';
 
 export default class AddCostScene {
   sceneID;
@@ -34,6 +35,13 @@ export default class AddCostScene {
 
     this.scene.on('text', async (ctx) => {
       CostDTO.subject = ctx.message.text;
+      const categoryName = await CostController.getCategoryNameBy(
+        CostDTO.subject
+      );
+      if (categoryName) {
+        CostDTO.category = categoryName;
+        return new ConfirmCostScene().start(ctx);
+      }
       ctx.reply('Выберите категорию расхода', await keyboards.categories());
     });
 
@@ -43,7 +51,8 @@ export default class AddCostScene {
     });
 
     this.scene.action(actions.ADD_CATEGORY, (ctx) => {
-      return new AddCategoryScene().start(ctx);
+      new AddCategoryScene().start(ctx);
+      return new ConfirmCostScene().start(ctx);
     });
 
     this.scene.action(actions.CANCEL, (ctx) => {

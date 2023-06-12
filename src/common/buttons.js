@@ -3,6 +3,7 @@ import { MONTH_NAMES } from './constants.js';
 import * as actions from './actions.js';
 import * as buttons from './buttons.js';
 import CategoryController from '../controllers/CategoryController.js';
+import CostController from '../controllers/CostController.js';
 
 export function lastCosts(costId) {
   return Markup.inlineKeyboard([buttons.edit(costId), buttons.del(costId)]);
@@ -26,11 +27,14 @@ export function months() {
   return buttons;
 }
 
-export async function categories() {
-  const categoryNames = await CategoryController.getAll();
+export async function categories(columnsCount, withCosts) {
+  let categoryNames = await CategoryController.getAll();
+  if (withCosts) {
+    categoryNames = await getCountCosts(categoryNames);
+  }
 
   const buttons = [];
-  const columns = 3;
+  const columns = columnsCount || 3;
   let start = 0;
   while (start < categoryNames.length) {
     const end = start + columns;
@@ -45,6 +49,17 @@ export async function categories() {
   }
 
   return buttons;
+}
+
+async function getCountCosts(categoryNames) {
+  const costsCount = [];
+  for (let i = 0; i < categoryNames.length; i++) {
+    const name = categoryNames[i].name;
+    const count = await CostController.getCountCostsByCategory(name);
+    costsCount.push({ name: `${name} ${count}` });
+  }
+
+  return costsCount;
 }
 
 export function yes() {
