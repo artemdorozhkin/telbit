@@ -10,7 +10,7 @@ export default class AddCostCommand {
   }
 
   handle() {
-    this.bot.hears(/^\b[0-9\,\.]+\b$/i, (ctx) => {
+    this.bot.hears(/^\b[0-9\+\-\*\/\,\.]+\b$/i, (ctx) => {
       if (!hasAccess(ctx)) {
         return ctx.reply(accessDeniedMsg)
       }

@@ -29,7 +29,7 @@ export default class AddCostScene {
       CostDTO.id = 0;
       const currentMonth = new Date().getMonth();
       CostDTO.month = MONTH_NAMES[currentMonth];
-      CostDTO.amount = +ctx.message.text.replace(',', '.').trim();
+      CostDTO.amount = this.getAmount(ctx.message.text);
       ctx.reply('Что оплатили?', keyboards.cancel());
     });
 
@@ -67,5 +67,23 @@ export default class AddCostScene {
     });
 
     return this.scene;
+  }
+
+  getAmount(text) {
+    const cleanText = this.clearText(text);
+    const haveOperators = this.isHaveOperators(text);
+    if (haveOperators) {
+      return eval(text);
+    } else {
+      return +cleanText;
+    }
+  }
+
+  clearText(text) {
+    return text.replace(',', '.').trim();
+  }
+
+  isHaveOperators(text) {
+    return /[\+\-\*\/]+/.test(text);
   }
 }
