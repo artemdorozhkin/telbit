@@ -129,7 +129,6 @@ export default class CostController {
       foundCategory = category.category.name;
     }
 
-    console.log(foundCategory);
     return foundCategory;
   }
 
