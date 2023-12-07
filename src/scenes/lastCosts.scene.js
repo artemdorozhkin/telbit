@@ -1,7 +1,6 @@
 import { Scenes } from 'telegraf';
-import CostController from '../controllers/CostController.js';
+import CostController from '../controllers/costController.js';
 import * as keyboards from '../common/inlineKeyboards.js';
-import log from '../common/logging.js';
 
 export default class LastCostsScene {
   sceneID;

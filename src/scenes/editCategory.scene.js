@@ -2,7 +2,7 @@ import { Scenes } from 'telegraf';
 import * as keyboards from '../common/inlineKeyboards.js';
 import * as actions from '../common/actions.js';
 import ConfirmCostScene from './confirmCost.scene.js';
-import CostDTO from '../models/dto/Cost.dto.js';
+import CostDTO from '../models/dto/cost.dto.js';
 import CancelScene from './cancel.scene.js';
 
 export default class EditCategoryScene {

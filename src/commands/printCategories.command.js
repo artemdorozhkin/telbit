@@ -1,6 +1,6 @@
 import { hasAccess } from '../common/utils.js';
 import { accessDeniedMsg } from '../common/constants.js';
-import CategoryController from '../controllers/CategoryController.js';
+import CategoryController from '../controllers/categoryController.js';
 
 export default class PrintCategoriesCommand {
   bot;
@@ -12,7 +12,7 @@ export default class PrintCategoriesCommand {
   handle() {
     this.bot.hears(/категории/i, async (ctx) => {
       if (!hasAccess(ctx)) {
-        return ctx.reply(accessDeniedMsg)
+        return ctx.reply(accessDeniedMsg);
       }
       const categories = await CategoryController.getAll();
       const count = categories.length;

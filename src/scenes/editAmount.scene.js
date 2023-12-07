@@ -1,5 +1,5 @@
 import { Scenes } from 'telegraf';
-import CostDTO from '../models/dto/Cost.dto.js';
+import CostDTO from '../models/dto/cost.dto.js';
 import ConfirmCostScene from './confirmCost.scene.js';
 import CancelScene from './cancel.scene.js';
 import isNumber from 'is-number';

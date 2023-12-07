@@ -1,5 +1,5 @@
 import * as actions from '../common/actions.js';
-import CostController from '../controllers/CostController.js';
+import CostController from '../controllers/costController.js';
 import costModelToObject from '../common/utils.js';
 import EditCostScene from '../scenes/editCost.scene.js';
 

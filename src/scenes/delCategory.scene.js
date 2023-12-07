@@ -1,7 +1,7 @@
 import { Scenes } from 'telegraf';
 import * as keyboards from '../common/inlineKeyboards.js';
 import * as actions from '../common/actions.js';
-import CategoryController from '../controllers/CategoryController.js';
+import CategoryController from '../controllers/categoryController.js';
 import CancelScene from './cancel.scene.js';
 
 export default class DelCategoryScene {

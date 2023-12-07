@@ -2,8 +2,8 @@ import { Markup } from 'telegraf';
 import { MONTH_NAMES } from './constants.js';
 import * as actions from './actions.js';
 import * as buttons from './buttons.js';
-import CategoryController from '../controllers/CategoryController.js';
-import CostController from '../controllers/CostController.js';
+import CategoryController from '../controllers/categoryController.js';
+import CostController from '../controllers/costController.js';
 
 export function lastCosts(costId) {
   return Markup.inlineKeyboard([buttons.edit(costId), buttons.del(costId)]);

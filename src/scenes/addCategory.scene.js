@@ -1,9 +1,9 @@
 import { Scenes } from 'telegraf';
 import * as keyboards from '../common/inlineKeyboards.js';
 import * as actions from '../common/actions.js';
-import CategoryController from '../controllers/CategoryController.js';
+import CategoryController from '../controllers/categoryController.js';
 import CancelScene from './cancel.scene.js';
-import CostDTO from '../models/dto/Cost.dto.js';
+import CostDTO from '../models/dto/cost.dto.js';
 
 export default class AddCategoryScene {
   sceneID;

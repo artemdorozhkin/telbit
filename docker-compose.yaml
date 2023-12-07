@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  telbit:
+    build:
+      dockerfile: ./docker/telbit/Dockerfile
+      context: .
+    depends_on:
+      - postgres
+    ports:
+      - 3000:3000
+    networks:
+      - telbit-net
+    env_file:
+      - .env
+  pgadmin:
+    build: docker/pgadmin
+    volumes:
+      - ./docker/pgadmin/data:/var/lib/pgadmin
+    ports:
+      - 5000:80
+    networks:
+      - telbit-net
+    env_file:
+      - .env
+  postgres:
+    build: docker/postgres
+    volumes:
+      - ./docker/postgres/data:/var/lib/postgresql
+    hostname: postgres
+    ports:
+      - 5432:5432
+    networks:
+      - telbit-net
+    env_file:
+      - .env
+
+networks:
+  telbit-net:

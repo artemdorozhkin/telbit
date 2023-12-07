@@ -1,8 +1,8 @@
 import * as actions from '../common/actions.js';
 import * as keyboards from '../common/inlineKeyboards.js';
-import CostController from '../controllers/CostController.js';
+import CostController from '../controllers/costController.js';
 import costModelToObject from '../common/utils.js';
-import CostDTO from '../models/dto/Cost.dto.js';
+import CostDTO from '../models/dto/cost.dto.js';
 import CancelScene from '../scenes/cancel.scene.js';
 
 export default class DeleteCostCommand {

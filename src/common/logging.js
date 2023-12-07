@@ -1,5 +1,5 @@
 import { Logger } from 'tslog';
-import ConfigService from './config/ConfigService.js';
+import ConfigService from './config/configService.js';
 
 const log = new Logger({
   minLevel: new ConfigService().get('LOG_LEVEL'),

@@ -1,10 +1,10 @@
 import { Scenes } from 'telegraf';
-import CostController from '../controllers/CostController.js';
+import CostController from '../controllers/costController.js';
 import EditCostScene from './editCost.scene.js';
 
 import * as keyboards from '../common/inlineKeyboards.js';
 import * as actions from '../common/actions.js';
-import CostDTO from '../models/dto/Cost.dto.js';
+import CostDTO from '../models/dto/cost.dto.js';
 
 export default class ConfirmCostScene {
   sceneID;

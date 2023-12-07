@@ -1,5 +1,5 @@
-import Chart from '../Chart.js';
-import CostController from '../controllers/CostController.js';
+import Chart from '../chart.js';
+import CostController from '../controllers/costController.js';
 import * as keyboards from '../common/inlineKeyboards.js';
 import { hasAccess } from '../common/utils.js';
 import { MONTHS_PATTERN, accessDeniedMsg } from '../common/constants.js';

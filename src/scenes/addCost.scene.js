@@ -3,12 +3,12 @@ import { Scenes } from 'telegraf';
 import * as keyboards from '../common/inlineKeyboards.js';
 import * as actions from '../common/actions.js';
 
-import CostDTO from '../models/dto/Cost.dto.js';
+import CostDTO from '../models/dto/cost.dto.js';
 import { MONTHS_PATTERN, MONTH_NAMES } from '../common/constants.js';
 import ConfirmCostScene from './confirmCost.scene.js';
 import CancelScene from './cancel.scene.js';
 import AddCategoryScene from './addCategory.scene.js';
-import CostController from '../controllers/CostController.js';
+import CostController from '../controllers/costController.js';
 
 export default class AddCostScene {
   sceneID;
