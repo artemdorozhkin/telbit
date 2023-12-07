@@ -8,7 +8,9 @@
     "dev": "nodemon ./src/index.js",
     "prod": "cross-env NODE_ENV=production node ./src/index.js",
     "lint": "eslint .",
-    "lint-fix": "eslint . --fix"
+    "lint-fix": "eslint . --fix",
+    "docker:up": "docker-compose up -d --build",
+    "docker:down": "docker-compose down"
   },
   "author": "artodoro",
   "license": "ISC",
