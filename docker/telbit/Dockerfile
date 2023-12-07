@@ -6,8 +6,7 @@ COPY package*.json ./
 
 COPY . .
 
-# Устанавливаем зависимости
 RUN npm install
+RUN npm install pg
 
-# Запускаем приложение
 CMD ["npm", "run", "prod"]
