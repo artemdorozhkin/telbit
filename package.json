@@ -17,14 +17,14 @@
   "dependencies": {
     "chartjs-node-canvas": "^4.1.6",
     "cross-env": "^7.0.3",
-    "dotenv": "^16.0.3",
+    "dotenv": "^16.3.1",
     "is-number": "^7.0.0",
     "moment": "^2.29.4",
     "mysql2": "^3.2.3",
     "nodemon": "^2.0.22",
     "prettier": "^2.8.8",
     "sequelize": "^6.31.0",
-    "telegraf": "^4.12.2",
+    "telegraf": "^4.15.3",
     "tslog": "^4.8.2"
   },
   "devDependencies": {
