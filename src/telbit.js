@@ -1,31 +1,30 @@
 import { Telegraf, Scenes, session } from 'telegraf';
-import telbitScenes from './scenes/index.js';
-import log from './common/logging.js'
 
 export default class Telbit {
-  bot;
-  stage;
-  commands;
+  _bot;
+  _stage;
+  _commands;
+  _log;
 
-  constructor(config, commands) {
-    log.info("creating bot instance")
-    this.bot = new Telegraf(config.get('TOKEN'));
-    this.stage = new Scenes.Stage(telbitScenes);
+  constructor(config, commands, log, scenes) {
+    this._log = log;
+    this._log.info('creating bot instance');
+    this._bot = new Telegraf(config.get('TOKEN'));
+    this._stage = new Scenes.Stage(scenes);
 
-    this.bot.use(session());
-    this.bot.use(this.stage.middleware());
-    this.commands = commands.get(this.bot);
+    this._bot.use(session());
+    this._bot.use(this._stage.middleware());
+    this._commands = commands.get(this._bot);
   }
 
   start() {
-    log.info("starting bot")
-    for (const command of this.commands) {
+    this._log.info('starting bot');
+    for (const command of this._commands) {
       command.handle();
     }
 
-    this.bot.launch();
-    this.bot.inlineQuery("a", ctx=> ctx.from.first_name)
-    log.info("bot is working!")
+    this._bot.launch();
+    this._bot.inlineQuery('a', (ctx) => ctx.from.first_name);
+    this._log.info('bot is working!');
   }
-
 }

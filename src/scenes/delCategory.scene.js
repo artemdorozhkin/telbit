@@ -16,7 +16,7 @@ export default class DelCategoryScene {
     return ctx.scene.enter(this.sceneID);
   }
 
-  get() {
+  create() {
     this.scene = new Scenes.BaseScene(this.sceneID);
 
     this.scene.enter(async (ctx) => {

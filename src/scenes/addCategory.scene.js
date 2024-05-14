@@ -17,7 +17,7 @@ export default class AddCategoryScene {
     return ctx.scene.enter(this.sceneID);
   }
 
-  get() {
+  create() {
     this.scene = new Scenes.BaseScene(this.sceneID);
 
     this.scene.enter((ctx) => {

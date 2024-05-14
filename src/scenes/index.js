@@ -11,17 +11,17 @@ import AddCategoryScene from './addCategory.scene.js';
 import DelCategoryScene from './delCategory.scene.js';
 
 const telbitScenes = [
-  new AddCostScene().get(),
-  new EditCostScene().get(),
-  new EditAmountScene().get(),
-  new EditCategoryScene().get(),
-  new EditMonthScene().get(),
-  new EditSubjectScene().get(),
-  new AddCategoryScene().get(),
-  new LastCostsScene().get(),
-  new ConfirmCostScene().get(),
-  new CancelScene().get(),
-  new DelCategoryScene().get(),
+  new AddCostScene().create(),
+  new EditCostScene().create(),
+  new EditAmountScene().create(),
+  new EditCategoryScene().create(),
+  new EditMonthScene().create(),
+  new EditSubjectScene().create(),
+  new AddCategoryScene().create(),
+  new LastCostsScene().create(),
+  new ConfirmCostScene().create(),
+  new CancelScene().create(),
+  new DelCategoryScene().create(),
 ];
 
 export default telbitScenes;
