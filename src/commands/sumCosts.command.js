@@ -1,9 +1,7 @@
-import Chart from '../chart.js';
 import CostController from '../controllers/costController.js';
 import * as keyboards from '../common/inlineKeyboards.js';
 import { hasAccess } from '../common/utils.js';
 import { MONTHS_PATTERN, accessDeniedMsg } from '../common/constants.js';
-import fs from 'fs';
 import log from '../common/logging.js';
 
 export default class SumCostsCommand {
@@ -46,7 +44,7 @@ export default class SumCostsCommand {
 
     this.bot.action(MONTHS_PATTERN, async (ctx) => {
       if (ctx.message) {
-        ctx.deleteMessage();
+        await ctx.deleteMessage();
       }
       const month = ctx.callbackQuery.data;
       const sum = await CostController.getSumByCategoty(month);
@@ -59,16 +57,6 @@ export default class SumCostsCommand {
         data.push(s['total']);
         total += +s['total'];
       });
-
-      try {
-        const chart = new Chart(labels, data, month);
-        await chart.getImage('monthReport').then(async (imgPath) => {
-          await ctx.replyWithPhoto({ source: imgPath });
-          fs.rmSync(imgPath);
-        });
-      } catch (error) {
-        ctx.reply('Не удалось отправить изображение, повторите попытку позже');
-      }
 
       ctx.replyWithHTML(`<b>Общая сумма за ${month}:</b> ${total}`);
     });
