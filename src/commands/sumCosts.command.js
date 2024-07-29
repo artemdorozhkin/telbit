@@ -50,20 +50,21 @@ export default class SumCostsCommand {
       await ctx.deleteMessage(this.msg.message_id);
       const month = ctx.callbackQuery.data;
       const sum = await CostController.getSumByCategoty(month);
-      if (!sum) {
+      if (sum.length == 0) {
         await ctx.reply(`За ${month} не нашел расходов🤨`);
         return;
       }
 
       let total = 0;
-      const categories = [];
+      const costs = [];
+      costs.push(`<b>Расходы за ${month}</b>\n`);
       sum.forEach((s) => {
-        categories.push(`${s['categoryName']}: ${+s['amount'].toFixed(2)}`);
+        costs.push(`${s['categoryName']}: ${+s['amount'].toFixed(2)}`);
         total += +s['amount'];
       });
 
-      categories.push(`<b>Общая сумма за ${month}:</b> ${total.toFixed(2)}`);
-      await ctx.replyWithHTML(categories.join('\n'));
+      costs.push(`\n<b>Итого:</b> ${total.toFixed(2)}`);
+      await ctx.replyWithHTML(costs.join('\n'));
     });
   }
 }
