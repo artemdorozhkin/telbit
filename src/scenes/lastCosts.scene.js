@@ -1,6 +1,5 @@
 import { Scenes } from 'telegraf';
 import CostController from '../controllers/costController.js';
-import * as keyboards from '../common/inlineKeyboards.js';
 
 export default class LastCostsScene {
   sceneID;
@@ -34,18 +33,18 @@ export default class LastCostsScene {
 
       if (!costs) return ctx.scene.leave();
 
-      costs.forEach((c) => {
-        this.printCostCard(ctx, c);
+      const cards = [];
+      costs.forEach((cost) => {
+        cards.push(this.getCostCard(cost));
       });
+
+      await ctx.reply(cards.join('\n'));
     });
 
     return this.scene;
   }
 
-  printCostCard(ctx, cost) {
-    ctx.reply(
-      `(${cost.category.name}) ${cost.subject}: ${cost.amount}`,
-      keyboards.costCard(cost.id)
-    );
+  getCostCard(cost) {
+    return `(${cost.category.name}) ${cost.subject}: ${cost.amount} /edit${cost.id} /del${cost.id}`;
   }
 }
