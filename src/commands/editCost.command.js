@@ -11,8 +11,8 @@ export default class EditCostCommand {
   }
 
   handle() {
-    this.bot.hears(new RegExp('/edit(\\d+)'), async (ctx) => {
-      const match = new RegExp('/edit(\\d+)').exec(ctx.callbackQuery.data);
+    this.bot.hears(/\/edit\d+/i, async (ctx) => {
+      const match = /\/edit(\d+)/i.exec(ctx.callbackQuery.data);
       if (!match) {
         ctx.reply('Что-то пошло не так👀');
         return;
