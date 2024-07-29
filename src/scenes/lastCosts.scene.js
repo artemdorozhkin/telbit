@@ -39,7 +39,7 @@ export default class LastCostsScene {
         const cardText = this.getCostCard(cost);
         if ((cards + cardText).length >= MAX_LENGTH) {
           ctx.replyWithHTML(cards);
-          cards = '';
+          cards = cardText;
         } else {
           cards += cardText;
         }
