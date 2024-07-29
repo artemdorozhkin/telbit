@@ -21,7 +21,7 @@ export default class EditCategoryScene {
     this.scene = new Scenes.BaseScene(this.sceneID);
 
     this.scene.enter(async (ctx) => {
-      ctx.editMessageText(
+      await ctx.editMessageText(
         'Выберите категорию расхода',
         await keyboards.categories()
       );
@@ -31,12 +31,14 @@ export default class EditCategoryScene {
       return new AddCategoryScene().start(ctx);
     });
 
-    this.scene.action(new RegExp(actions.CATEGORY), (ctx) => {
+    this.scene.action(new RegExp(actions.CATEGORY), async (ctx) => {
       CostDTO.category = ctx.callbackQuery.data.replace(actions.CATEGORY, '');
+      await ctx.deleteMessage();
       return new ConfirmCostScene().start(ctx);
     });
 
-    this.scene.action(actions.CANCEL, (ctx) => {
+    this.scene.action(actions.CANCEL, async (ctx) => {
+      await ctx.deleteMessage();
       return new CancelScene().start(ctx);
     });
 
