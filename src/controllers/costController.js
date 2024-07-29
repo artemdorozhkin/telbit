@@ -10,7 +10,7 @@ export default class CostController {
 
     await Cost.create({
       subject: cost.subject,
-      amount: cost.amount.toFixed(2),
+      amount: (+cost.amount).toFixed(2),
       month: cost.month,
       categoryId,
     });
