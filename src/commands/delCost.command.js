@@ -14,8 +14,8 @@ export default class DeleteCostCommand {
   }
 
   handle() {
-    this.bot.hears(/\/edit\d+/i, async (ctx) => {
-      const match = /\/edit(\d+)/i.exec(ctx.message.text);
+    this.bot.hears(/\/del\d+/i, async (ctx) => {
+      const match = /\/del(\d+)/i.exec(ctx.message.text);
       if (!match) {
         ctx.reply('Что-то пошло не так👀');
         return;
