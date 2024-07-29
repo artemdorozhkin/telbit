@@ -51,12 +51,12 @@ export default class SumCostsCommand {
       const month = ctx.callbackQuery.data;
       console.log('Hallo!');
       const sum = await CostController.getSumByCategoty(month);
+      console.log(sum);
 
       let total = 0;
       const categories = [];
-      console.log(sum);
       sum.forEach((s) => {
-        categories.push(`${s['category']}: ${s['totalAmount']}`);
+        categories.push(`${s['category']}: ${s['amount']}`);
         total += +s['total'];
       });
 
@@ -64,7 +64,7 @@ export default class SumCostsCommand {
 
       await ctx.reply(categories.join('\n'));
       await ctx.replyWithHTML(
-        `<b>Общая сумма за ${month}:</b> ${sum.toFixed(2)}`
+        `<b>Общая сумма за ${month}:</b> ${total.toFixed(2)}`
       );
     });
   }
