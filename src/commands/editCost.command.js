@@ -12,7 +12,7 @@ export default class EditCostCommand {
 
   handle() {
     this.bot.hears(/\/edit\d+/i, async (ctx) => {
-      const match = /\/edit(\d+)/i.exec(ctx.callbackQuery.data);
+      const match = /\/edit(\d+)/i.exec(ctx.message.text);
       if (!match) {
         ctx.reply('Что-то пошло не так👀');
         return;
