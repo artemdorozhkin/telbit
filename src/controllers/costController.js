@@ -84,11 +84,12 @@ export default class CostController {
           );
           if (!category) {
             sumByCategory.push({
-              name: result.category.name,
-              amount: result.amount,
+              categoryName: result.category.name,
+              amount: +result.amount,
             });
           } else {
-            category.amount += result.amount;
+            category.amount += +result.amount;
+            category.amount = category.amount.toFixed(2);
           }
         }
       });
