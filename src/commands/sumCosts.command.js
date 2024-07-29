@@ -49,18 +49,14 @@ export default class SumCostsCommand {
     this.bot.action(MONTHS_PATTERN, async (ctx) => {
       await ctx.deleteMessage(this.msg.message_id);
       const month = ctx.callbackQuery.data;
-      console.log('Hallo!');
       const sum = await CostController.getSumByCategoty(month);
-      console.log(sum);
 
       let total = 0;
       const categories = [];
       sum.forEach((s) => {
         categories.push(`${s['categoryName']}: ${s['amount']}`);
-        total += +s['total'];
+        total += +s['amount'];
       });
-
-      console.log(`sum: ${total}`);
 
       await ctx.reply(categories.join('\n'));
       await ctx.replyWithHTML(

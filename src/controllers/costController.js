@@ -80,7 +80,7 @@ export default class CostController {
       results.forEach((result) => {
         if (result.month === month && result.category) {
           let category = sumByCategory.find(
-            (cat) => cat.name == result.category.name
+            (cat) => cat.categoryName == result.category.name
           );
           if (!category) {
             sumByCategory.push({
