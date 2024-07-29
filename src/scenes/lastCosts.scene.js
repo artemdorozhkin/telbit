@@ -37,7 +37,7 @@ export default class LastCostsScene {
       const MAX_LENGTH = 4096;
       costs.forEach(async (cost) => {
         const cardText = this.getCostCard(cost);
-        if ((cards + cardText).length >= 4096) {
+        if ((cards + cardText).length >= MAX_LENGTH) {
           await ctx.replyWithHTML(cards);
           cards = '';
         } else {
@@ -46,7 +46,7 @@ export default class LastCostsScene {
       });
 
       if (cards.length > 0) {
-        await ctx.replyWithHTML(cards.join('\n'));
+        await ctx.replyWithHTML(cards);
       }
     });
 
