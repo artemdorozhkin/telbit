@@ -38,13 +38,13 @@ export default class LastCostsScene {
         cards.push(this.getCostCard(cost));
       });
 
-      await ctx.reply(cards.join('\n'));
+      await ctx.replyWithHTML(cards.join('\n'));
     });
 
     return this.scene;
   }
 
   getCostCard(cost) {
-    return `(${cost.category.name}) ${cost.subject}: ${cost.amount} /edit${cost.id} /del${cost.id}`;
+    return `<b>(${cost.category.name}) ${cost.subject}: <i>${cost.amount}</i></b>\nИзменить: /edit${cost.id}\nУдалить: /del${cost.id}\b`;
   }
 }
