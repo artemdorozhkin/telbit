@@ -27,7 +27,7 @@ export default class SumCostsCommand {
         total += +s.total;
         costs.push(`${s.subject}: ${s.total}`);
       });
-      costs.push(`\nИтого: ${total.toFixed(2)}`);
+      costs.push(`\n<b>Итого</b>: ${total.toFixed(2)}`);
 
       if (costs.length === 1) {
         return ctx.reply('На сегодня расходов нет 🤗');
@@ -50,6 +50,10 @@ export default class SumCostsCommand {
       await ctx.deleteMessage(this.msg.message_id);
       const month = ctx.callbackQuery.data;
       const sum = await CostController.getSumByCategoty(month);
+      if (!sum) {
+        await ctx.reply(`За ${month} не нашел расходов🤨`);
+        return;
+      }
 
       let total = 0;
       const categories = [];
@@ -58,10 +62,8 @@ export default class SumCostsCommand {
         total += +s['amount'];
       });
 
-      await ctx.reply(categories.join('\n'));
-      await ctx.replyWithHTML(
-        `<b>Общая сумма за ${month}:</b> ${total.toFixed(2)}`
-      );
+      categories.push(`<b>Общая сумма за ${month}:</b> ${total.toFixed(2)}`);
+      await ctx.replyWithHTML(categories.join('\n'));
     });
   }
 }
