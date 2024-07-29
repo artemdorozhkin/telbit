@@ -39,11 +39,11 @@ export default class AddCostScene {
       const categoryName = await CostController.getCategoryNameBy(
         CostDTO.subject
       );
+      await ctx.deleteMessage(this.msg.message_id);
       if (categoryName) {
         CostDTO.category = categoryName;
         return new ConfirmCostScene().start(ctx);
       }
-      await ctx.deleteMessage(this.msg.message_id);
       this.msg = await ctx.reply(
         'Выберите категорию расхода',
         await keyboards.categories()
