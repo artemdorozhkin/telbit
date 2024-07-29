@@ -14,7 +14,7 @@ export default class DeleteCostCommand {
   }
 
   handle() {
-    this.bot.action(new RegExp('del'), async (ctx) => {
+    this.bot.hears(new RegExp('/del'), async (ctx) => {
       const match = new RegExp(`del(\\d+)`).exec(ctx.callbackQuery.data);
       if (!match) {
         ctx.reply('Что-то пошло не так👀');
