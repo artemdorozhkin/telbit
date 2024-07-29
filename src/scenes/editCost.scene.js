@@ -23,7 +23,7 @@ export default class EditCostScene {
     this.scene = new Scenes.BaseScene(this.sceneID);
 
     this.scene.enter(async (ctx) => {
-      ctx.editMessageText('Что изменить?', keyboards.editCost());
+      ctx.reply('Что изменить?', keyboards.editCost());
     });
 
     this.scene.action(actions.CANCEL, (ctx) => {
