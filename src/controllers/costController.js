@@ -75,7 +75,7 @@ export default class CostController {
         include: [
           {
             model: Category,
-            attributes: [],
+            attributes: ['name'],
           },
         ],
         where: {
