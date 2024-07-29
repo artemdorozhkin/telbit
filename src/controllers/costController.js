@@ -81,7 +81,7 @@ export default class CostController {
         where: {
           month: month,
         },
-        group: ['category.name'],
+        group: ['category.name', 'category.id'],
       });
 
       // Преобразуем результат запроса в более удобный формат
