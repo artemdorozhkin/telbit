@@ -33,12 +33,21 @@ export default class LastCostsScene {
 
       if (!costs) return ctx.scene.leave();
 
-      const cards = [];
-      costs.forEach((cost) => {
-        cards.push(this.getCostCard(cost));
+      let cards = '';
+      const MAX_LENGTH = 4096;
+      costs.forEach(async (cost) => {
+        const cardText = this.getCostCard(cost);
+        if ((cards + cardText).length >= 4096) {
+          await ctx.replyWithHTML(cards);
+          cards = '';
+        } else {
+          cards += cardText;
+        }
       });
 
-      await ctx.replyWithHTML(cards.join('\n'));
+      if (cards.length > 0) {
+        await ctx.replyWithHTML(cards.join('\n'));
+      }
     });
 
     return this.scene;
