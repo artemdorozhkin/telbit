@@ -9,7 +9,7 @@
     "prod": "cross-env NODE_ENV=production node ./src/index.js",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
-    "docker:up": "docker-compose up --build",
+    "docker:up": "docker-compose up --build -d",
     "docker:down": "docker-compose down"
   },
   "author": "artodoro",
