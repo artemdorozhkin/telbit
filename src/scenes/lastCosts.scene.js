@@ -54,6 +54,6 @@ export default class LastCostsScene {
   }
 
   getCostCard(cost) {
-    return `<b>(${cost.category.name}) ${cost.subject}: <i>${cost.amount}</i></b>\nИзменить: /edit${cost.id}\nУдалить: /del${cost.id}\n`;
+    return `<b>(${cost.category.name}) ${cost.subject}: <i>${cost.amount}</i></b>\nИзменить: /edit${cost.id}\nУдалить: /del${cost.id}\n\n`;
   }
 }
