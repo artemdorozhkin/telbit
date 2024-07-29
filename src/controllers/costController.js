@@ -89,7 +89,6 @@ export default class CostController {
             });
           } else {
             category.amount += +result.amount;
-            category.amount = category.amount.toFixed(2);
           }
         }
       });

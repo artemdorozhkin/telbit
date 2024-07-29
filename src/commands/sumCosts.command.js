@@ -54,7 +54,7 @@ export default class SumCostsCommand {
       let total = 0;
       const categories = [];
       sum.forEach((s) => {
-        categories.push(`${s['categoryName']}: ${s['amount']}`);
+        categories.push(`${s['categoryName']}: ${+s['amount'].toFixed(2)}`);
         total += +s['amount'];
       });
 
