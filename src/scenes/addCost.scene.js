@@ -16,6 +16,7 @@ export default class AddCostScene {
 
   constructor() {
     this.sceneID = 'ADD_COST';
+    this.msg = null;
   }
 
   start(ctx) {
@@ -25,12 +26,12 @@ export default class AddCostScene {
   get() {
     this.scene = new Scenes.BaseScene(this.sceneID);
 
-    this.scene.enter((ctx) => {
+    this.scene.enter(async (ctx) => {
       CostDTO.id = 0;
       const currentMonth = new Date().getMonth();
       CostDTO.month = MONTH_NAMES[currentMonth];
-      CostDTO.amount = this.getAmount(ctx.message.text);
-      ctx.reply('Что оплатили?', keyboards.cancel());
+      CostDTO.amount = this.getAmount(ctx.message.text).toFixed(2);
+      this.msg = await ctx.reply('Что оплатили?', keyboards.cancel());
     });
 
     this.scene.on('text', async (ctx) => {
@@ -42,11 +43,16 @@ export default class AddCostScene {
         CostDTO.category = categoryName;
         return new ConfirmCostScene().start(ctx);
       }
-      ctx.reply('Выберите категорию расхода', await keyboards.categories());
+      await ctx.deleteMessage(this.msg.message_id);
+      this.msg = await ctx.reply(
+        'Выберите категорию расхода',
+        await keyboards.categories()
+      );
     });
 
-    this.scene.action(new RegExp(`^${actions.CATEGORY}`), (ctx) => {
+    this.scene.action(new RegExp(`^${actions.CATEGORY}`), async (ctx) => {
       CostDTO.category = ctx.callbackQuery.data.replace(actions.CATEGORY, '');
+      await ctx.deleteMessage(this.msg.message_id);
       return new ConfirmCostScene().start(ctx);
     });
 

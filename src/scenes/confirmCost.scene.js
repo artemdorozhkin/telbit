@@ -12,6 +12,7 @@ export default class ConfirmCostScene {
 
   constructor() {
     this.sceneID = 'CONFIRM_COST';
+    this.msg = null;
   }
 
   start(ctx) {
@@ -21,8 +22,8 @@ export default class ConfirmCostScene {
   get() {
     this.scene = new Scenes.BaseScene(this.sceneID);
 
-    this.scene.enter((ctx) => {
-      ctx.reply(
+    this.scene.enter(async (ctx) => {
+      this.msg = await ctx.reply(
         `<b>Категория</b>: ${CostDTO.category}
 <b>Оплатили</b>: ${CostDTO.subject}
 <b>Сумма</b>: ${CostDTO.amount}
@@ -42,6 +43,7 @@ export default class ConfirmCostScene {
       } else {
         await CostController.update(CostDTO);
       }
+      await ctx.deleteMessage(this.msg.message_id);
       ctx.editMessageText('Расход записан! 👌');
       return ctx.scene.leave();
     });

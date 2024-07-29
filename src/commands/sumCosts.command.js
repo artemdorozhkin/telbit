@@ -9,6 +9,7 @@ export default class SumCostsCommand {
 
   constructor(bot) {
     this.bot = bot;
+    this.msg = null;
   }
 
   handle() {
@@ -26,7 +27,7 @@ export default class SumCostsCommand {
         total += +s.total;
         costs.push(`${s.subject}: ${s.total}`);
       });
-      costs.push(`\nИтого: ${total}`);
+      costs.push(`\nИтого: ${total.toFixed(2)}`);
 
       if (costs.length === 1) {
         return ctx.reply('На сегодня расходов нет 🤗');
@@ -39,26 +40,32 @@ export default class SumCostsCommand {
       if (!hasAccess(ctx)) {
         return ctx.reply(accessDeniedMsg);
       }
-      ctx.reply('Выберите месяц для отчета', keyboards.months());
+      this.msg = await ctx.reply(
+        'Выберите месяц для отчета',
+        keyboards.months()
+      );
     });
 
     this.bot.action(MONTHS_PATTERN, async (ctx) => {
-      if (ctx.message) {
-        await ctx.deleteMessage();
-      }
+      await ctx.deleteMessage(this.msg.message_id);
       const month = ctx.callbackQuery.data;
+      console.log('Hallo!');
       const sum = await CostController.getSumByCategoty(month);
 
-      const labels = [];
-      const data = [];
       let total = 0;
+      const categories = [];
+      console.log(sum);
       sum.forEach((s) => {
-        labels.push(s['category.name']);
-        data.push(s['total']);
+        categories.push(`${s['category']}: ${s['totalAmount']}`);
         total += +s['total'];
       });
 
-      ctx.replyWithHTML(`<b>Общая сумма за ${month}:</b> ${total}`);
+      console.log(`sum: ${total}`);
+
+      await ctx.reply(categories.join('\n'));
+      await ctx.replyWithHTML(
+        `<b>Общая сумма за ${month}:</b> ${sum.toFixed(2)}`
+      );
     });
   }
 }

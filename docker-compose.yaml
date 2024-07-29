@@ -1,19 +1,6 @@
 version: '3.8'
 
 services:
-  telbit:
-    build:
-      dockerfile: ./docker/telbit/Dockerfile
-      context: .
-    depends_on:
-      - postgres
-    restart: on-failure
-    ports:
-      - 3000:3000
-    networks:
-      - telbit-net
-    env_file:
-      - .env
   pgadmin:
     build: docker/pgadmin
     volumes:
@@ -33,6 +20,25 @@ services:
       - 5433:5432
     expose:
       - 5433
+    networks:
+      - telbit-net
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U telbit"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  telbit:
+    build:
+      dockerfile: ./docker/telbit/Dockerfile
+      context: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: on-failure
+    ports:
+      - 3000:3000
     networks:
       - telbit-net
     env_file:

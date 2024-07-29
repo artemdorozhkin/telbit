@@ -66,20 +66,34 @@ export default class CostController {
   }
 
   static async getSumByCategoty(month) {
-    const sum = await Cost.findAll({
-      attributes: [
-        'categoryId',
-        [Sequelize.fn('sum', Sequelize.col('amount')), 'total'],
-      ],
-      where: {
-        month,
-      },
-      group: ['categoryId'],
-      include: Category,
-      raw: true,
-    });
+    try {
+      const results = await Cost.findAll({
+        attributes: [
+          [Sequelize.fn('sum', Sequelize.col('amount')), 'totalAmount'],
+          'category.name',
+        ],
+        include: [
+          {
+            model: Category,
+            attributes: [],
+          },
+        ],
+        where: {
+          month: month,
+        },
+        group: ['category.name'],
+      });
 
-    return sum || 0;
+      // Преобразуем результат запроса в более удобный формат
+      const formattedResults = results.map((result) => ({
+        category: result.get('category.name'),
+        totalAmount: result.get('totalAmount'),
+      }));
+
+      return formattedResults;
+    } catch (error) {
+      console.error('Error fetching monthly sum by category:', error);
+    }
   }
 
   static async getMonthSum() {
