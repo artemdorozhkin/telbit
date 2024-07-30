@@ -59,6 +59,7 @@ export default class CostController {
         },
       },
       group: ['subject'],
+      order: [['total', 'DESC']],
       raw: true,
     });
 
@@ -68,13 +69,20 @@ export default class CostController {
   static async getSumByCategoty(month) {
     try {
       const results = await Cost.findAll({
+        attributes: [
+          Sequelize.col('category.name'),
+          Sequelize.fn('sum', 'amount'),
+        ],
         include: [
           {
             model: Category,
-            attributes: ['name'],
+            attributes: [],
           },
         ],
+        group: ['category.name'],
+        order: [['amount', 'DESC']],
       });
+      console.log(results);
 
       const sumByCategory = [];
       results.forEach((result) => {
