@@ -89,6 +89,7 @@ export default class CostController {
         ],
       });
 
+      console.log(results);
       const formattedResult = [];
       results.forEach((result) => {
         formattedResult.push({
@@ -97,6 +98,7 @@ export default class CostController {
         });
       });
 
+      console.log(formattedResult);
       return formattedResult;
     } catch (error) {
       console.error('Error fetching monthly sum by category:', error);
