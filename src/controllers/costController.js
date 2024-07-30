@@ -85,20 +85,18 @@ export default class CostController {
           ['total', 'DESC'],
         ],
       });
-      console.log(results);
 
-      const sumByCategory = [];
       results.forEach((result) => {
         if (result.month === month && result.category) {
           console.log(result.category.name);
-          sumByCategory.push({
-            categoryName: result.category.name,
+          formattedResult.push({
+            categoryName: result.categoryName,
             amount: +result.amount,
           });
         }
       });
 
-      return sumByCategory;
+      return formattedResult;
     } catch (error) {
       console.error('Error fetching monthly sum by category:', error);
     }
