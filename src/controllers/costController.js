@@ -93,8 +93,8 @@ export default class CostController {
       const formattedResult = [];
       results.forEach((result) => {
         formattedResult.push({
-          categoryName: result.categoryName,
-          amount: +result.amount,
+          categoryName: result.dataValues.categoryName,
+          amount: +result.dataValues.amount,
         });
       });
 
