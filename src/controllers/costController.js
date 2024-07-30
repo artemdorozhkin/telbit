@@ -83,10 +83,7 @@ export default class CostController {
           },
         ],
         group: ['categoryName'],
-        order: [
-          ['categoryName', 'DESC'],
-          ['total', 'DESC'],
-        ],
+        order: [['total', 'DESC']],
       });
 
       console.log(results);
