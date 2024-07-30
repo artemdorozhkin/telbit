@@ -59,8 +59,8 @@ export default class SumCostsCommand {
       const costs = [];
       costs.push(`<b>Расходы за ${month}</b>\n`);
       sum.forEach((s) => {
-        const totalAmount = +s.total;
-        costs.push(`${s.categoryName}: ${totalAmount.toFixed(2)}`);
+        const totalAmount = +s['total'];
+        costs.push(`${s['categoryName']}: ${totalAmount.toFixed(2)}`);
         total += totalAmount;
       });
 
