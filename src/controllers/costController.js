@@ -70,7 +70,7 @@ export default class CostController {
     try {
       const results = await Cost.findAll({
         attributes: [
-          Sequelize.col('Category.name'),
+          Sequelize.col('category.name'),
           [Sequelize.fn('sum', Sequelize.col('amount')), 'total'],
         ],
         include: [
@@ -79,10 +79,10 @@ export default class CostController {
             attributes: [],
           },
         ],
-        group: ['Category.name'],
+        group: ['category.name'],
         order: [
           ['total', 'DESC'],
-          ['Category.name', 'DESC'],
+          ['category.name', 'DESC'],
         ],
       });
       console.log(results);
@@ -90,17 +90,11 @@ export default class CostController {
       const sumByCategory = [];
       results.forEach((result) => {
         if (result.month === month && result.category) {
-          let category = sumByCategory.find(
-            (cat) => cat.categoryName == result.category.name
-          );
-          if (!category) {
-            sumByCategory.push({
-              categoryName: result.category.name,
-              amount: +result.amount,
-            });
-          } else {
-            category.amount += +result.amount;
-          }
+          console.log(result.category.name);
+          sumByCategory.push({
+            categoryName: result.category.name,
+            amount: +result.amount,
+          });
         }
       });
 
