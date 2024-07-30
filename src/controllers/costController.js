@@ -94,7 +94,7 @@ export default class CostController {
       results.forEach((result) => {
         formattedResult.push({
           categoryName: result.dataValues.categoryName,
-          amount: +result.dataValues.amount,
+          total: +result.dataValues.total,
         });
       });
 
