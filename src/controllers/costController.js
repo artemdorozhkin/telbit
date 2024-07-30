@@ -71,7 +71,7 @@ export default class CostController {
       const results = await Cost.findAll({
         attributes: [
           Sequelize.col('category.name'),
-          Sequelize.fn('sum', 'amount'),
+          [Sequelize.fn('sum', 'amount'), 'total'],
         ],
         include: [
           {
@@ -80,7 +80,7 @@ export default class CostController {
           },
         ],
         group: ['category.name'],
-        order: [['amount', 'DESC']],
+        order: [['total', 'DESC']],
       });
       console.log(results);
 
