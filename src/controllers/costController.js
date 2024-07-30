@@ -86,6 +86,7 @@ export default class CostController {
         ],
       });
 
+      const formattedResult = [];
       results.forEach((result) => {
         if (result.month === month && result.category) {
           console.log(result.category.name);
