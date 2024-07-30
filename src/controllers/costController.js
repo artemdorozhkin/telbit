@@ -73,6 +73,9 @@ export default class CostController {
           [Sequelize.col('category.name'), 'categoryName'],
           [Sequelize.fn('sum', Sequelize.col('amount')), 'total'],
         ],
+        where: {
+          month: month,
+        },
         include: [
           {
             model: Category,
@@ -86,18 +89,7 @@ export default class CostController {
         ],
       });
 
-      const formattedResult = [];
-      results.forEach((result) => {
-        if (result.month === month && result.category) {
-          console.log(result.category.name);
-          formattedResult.push({
-            categoryName: result.categoryName,
-            amount: +result.amount,
-          });
-        }
-      });
-
-      return formattedResult;
+      return results;
     } catch (error) {
       console.error('Error fetching monthly sum by category:', error);
     }
