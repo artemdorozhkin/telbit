@@ -89,7 +89,15 @@ export default class CostController {
         ],
       });
 
-      return results;
+      const formattedResult = [];
+      results.forEach((result) => {
+        formattedResult.push({
+          categoryName: result.categoryName,
+          amount: +result.amount,
+        });
+      });
+
+      return formattedResult;
     } catch (error) {
       console.error('Error fetching monthly sum by category:', error);
     }
